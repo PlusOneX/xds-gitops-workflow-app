@@ -1,0 +1,4 @@
+name: ExpressJS API CI/CD pipeline.
+on: [push]
+permissions:
+  contents: read
