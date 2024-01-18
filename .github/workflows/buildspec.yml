@@ -53,3 +53,21 @@ jobs:
         aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
         docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:${{ github.sha }} .
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:${{ github.sha }}
+
+  update_configuration:
+    name: Trigger update workflow in the manifests repository
+    uses: actions/github-script@v7
+    with:
+      github-token: ${{ secrets.PAT }}
+      script: |
+        await github.rest.actions.createWorkflowDispatch({
+          owner: 'sibabalwe47',
+          repo: 'xds-gitops-workflow-config',
+          workflow_id: 'values.yaml',
+          ref: 'main',
+          inputs: {
+            message: '${{ steps.git-message.outputs.message }}',
+            image: '$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:${{ github.sha }}',
+            sha: '${{ steps.git-sha.outputs.sha }}'
+          }
+        })
