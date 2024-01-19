@@ -55,11 +55,11 @@ jobs:
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO_NAME:${{ github.sha }}
 
   update_configuration:
-    name: Docker & ECR repository
+    name: Update manifest repository
     runs-on: ubuntu-latest
     needs: package_docker_image
     steps:
-    - name: Trigger update workflow in the manifests repository
+    - name: Triggers update of manifests repository
       uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.PAT }}
