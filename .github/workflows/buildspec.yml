@@ -65,7 +65,7 @@ jobs:
         github-token: ${{ secrets.PAT }}
         script: |
           await github.rest.actions.createWorkflowDispatch({
-            owner: 'sibabalwe47',
+            owner: 'PlusOneX',
             repo: 'xds-gitops-workflow-config',
             workflow_id: 'values.yaml',
             ref: 'main',
