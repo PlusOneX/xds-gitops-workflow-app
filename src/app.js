@@ -6,7 +6,7 @@ const app = express();
 
 
 app.get('/', (req, res) => {
-  res.send(`API running in ${env} mode!`);
+  res.send(`API running in ${env} mode!!`);
 });
 
 app.listen(3000, () => {
